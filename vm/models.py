@@ -9,14 +9,13 @@ class Visitor(models.Model):
     v_perpose = models.CharField(max_length = 100 , default = "")
     v_collage = models.CharField(max_length = 100 , default = "")
     v_time = models.DateTimeField(auto_now_add = True)
-    
+
     def __str__(self):
         return self.v_name
 
     def get_absolute_url(self):
         # return reverse("Visitor_detail", kwargs={"pk": self.pk})
         pass
-
 
 
 class Convener(models.Model):
@@ -32,19 +31,20 @@ class Convener(models.Model):
 
     def __str__(self):
         return self.vp_name
-    
+
     def get_absolute_url(self):
         pass
 
 
 
 class Meeting(models.Model):
-    m_id = models.AutoField(primary_key = True)
+    m_id = models.AutoField( primary_key = True )
     v_id = models.ForeignKey(Visitor, on_delete=models.PROTECT)
     vp_id = models.ForeignKey(Convener, on_delete=models.PROTECT)
-    v_login_time = models.DateTimeField(auto_now_add = True)
-    v_logout_time = models.TimeField()
-
+    vp_approved = models.BooleanField( default = True ) 
+    v_login_time = models.DateTimeField()
+    v_logout_time = models.DateTimeField()
+    v_meeting_done = models.BooleanField( default= False )
     def __str__(self) :
         str = self.m_id + '=' + self.v_id + '+' + self.vp_id 
         return  str
