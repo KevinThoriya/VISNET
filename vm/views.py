@@ -24,3 +24,6 @@ def contact(request):
 
 def about(request):
     return render(request,'about.html')
+
+#list of superuser:
+# username = kevin -> password = admin
