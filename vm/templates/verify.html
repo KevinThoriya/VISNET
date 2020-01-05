@@ -83,6 +83,13 @@ padding: 3px;
     color: darksalmon;
 }
 
+#message_otp{
+    color: yellow;
+    font-size: larger;
+    margin: -20px 200px;
+    padding: 5px;    
+}
+
 {% endblock %}
 
 {% block body %}
@@ -101,27 +108,27 @@ padding: 3px;
 
                     <tr>
                         <th style="width:200px;">Name :</th>
-                        <td> Kevin Thoriya </td>
+                        <td> {{name}} </td>
                     </tr>
                     <tr>
                         <th>Email :</th>
-                        <td> kevinthoriya0074@gmail.com </td>
+                        <td> {{email}} </td>
                     </tr>
                     <tr>
                         <th>Mobile No : </th>
-                        <td> 9537593503 </td>
+                        <td> {{mobile}} </td>
                     </tr>
                     <tr>
                         <th>From :</th>
-                        <td> Navsari </td>
+                        <td> {{address}} </td>
                     </tr>
                     <tr>
                         <th>For : </th>
-                        <td> Meeting </td>
+                        <td> {{perpose}} </td>
                     </tr>
                     <tr>
                         <th>To : </th>
-                        <td> HOD CSE/IT </td>
+                        <td> {{vp_name}} </td>
                     </tr>
                     <tr>
                         <th></th>
@@ -139,26 +146,69 @@ padding: 3px;
         </p>
     </div>
     <div class="form-controls">
-        <form action="/access/" method="POST">
+        <form id="otpverify" method="POST">
             {% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label class="mt-2" for="">OTP : </label>
                 </div>
+                <input type="hidden" name="id" value="{{v_id}}">
                 <div class="form-group col-md-6">
                     <input id="otp" type="text" name="otp" class="form-control">
                 </div>
 
                 <div class="form-group col-md-4">
-                    <input type="submit" value="Vertify My Number" class="btn-submit" class="btn form-control">
+                    <input id="sub_form" type="submit" value="Vertify My Number" class="btn-submit" class="btn form-control">
+                </div>
+                <div id="message_otp">
+
                 </div>
             </div>
         </form>
     </div>
+    {% csrf_token %}
 </div>
 
 {% endblock %}
 
 {% block js %}
+
+//<script>
+var verify = false; 
+$('#otpverify').submit(function(event){
+    if (!verify)
+    {
+
+        event.preventDefault();
+        var formdata = {
+            'id' : $('input[name=id]').val(),
+            'otp' : $('input[name=otp]').val(),
+        };
+
+        $.ajax({
+            type : 'GET',
+            url : '/verifyotp/',
+            data : formdata,
+            encode: true,
+        }).done(function(data){
+            document.getElementById('message_otp').innerHTML = data;
+            // $('#message_otp').html = data; 
+            if(data == 'Thanks For Verify Number.'){
+                $('#otpverify').attr('action','/access/');
+                event.returnValue = true;
+                verify = true;
+                allowSubmit = true;
+                $(this).unbind('submit').submit();
+                document.getElementById('sub_form').click();
+    
+            }
+        });
+    }
+    else{
+        $.post( "/access/", { id : $('input[name=id]').val()
+                                    , 'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val() } );
+    }
+
+});
 
 {% endblock %}

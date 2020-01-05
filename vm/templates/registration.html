@@ -87,45 +87,45 @@ input[type="tel"]::placeholder{
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="fn">First Name</label>
-                        <input type="text" id="fn" name="fname"  class="form-control" placeholder="First name">
+                        <input required type="text" id="fn" name="fname"  class="form-control" placeholder="First name">
                     </div>
                     <div class="form-group">
                         <label for="sn">Last Name </label>
-                        <input id="sn" name="sname" type="text" class="form-control" placeholder="Last name">
+                        <input required id="sn" name="sname" type="text" class="form-control" placeholder="Last name">
                     </div>
                     <div class="form-group">
                         <label for="email"> Email </label>
-                        <input id="email" name="email" type="email" class="form-control" placeholder="Email">
+                        <input required id="email" name="email" type="email" class="form-control" placeholder="Email">
                     </div>
                     <div class="form-group">
                         <label for="mobile"> Mobile No. </label>
-                        <input id="mobile" name="mobile" type="tel" class="form-control" placeholder="Mobile No.">
+                        <input required id="mobile" name="mobile" type="tel" class="form-control" placeholder="Mobile No.">
                     </div>
                 </div>
             </div>
                 <div class="form-group">
                     <label for="add"> Short Address </label>
-                    <input id="add" type="text" class="form-control" name="address" placeholder="Where are you From..">
+                    <input required id="add" type="text" class="form-control" name="address" placeholder="Where are you From..">
                 </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="pov" > Perpose of Visit </label>
-                    <select id="pov" class="form-control">
+                    <select id="pov" name="perpose" class="form-control">
                         <option selected>-</option>
                         <option>A</option>
                         <option>B</option>
-                        <option>C</option>
+                        <option value="meeting" >C</option>
                         <option>D</option>
                         <option>E</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="pv"> Who you want to Visit </label>
-                    <select id="pv" class="form-control">
+                    <select id="pv" name="towhom" class="form-control">
                         <option selected>-</option>
                         <option>A</option>
                         <option>B</option>
-                        <option>C</option>
+                        <option value="1" >C</option>
                         <option>D</option>
                         <option>E</option>
                     </select>
