@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Visitor, Convener, Meeting
 from .Extra_Tools import otp as otpa
 from .Extra_Tools import genrate_access as ga
-import .Extra_Tools import send_email as se
+from .Extra_Tools import send_email as se
 
 
 def index(request):
@@ -36,11 +36,12 @@ def verify(request):
         
         visitor = Visitor(v_name = name , v_email = email , v_mobile = mobile , v_perpose = perpose , v_address = address , v_otp = otp )
         visitor.save()
-        
         vp = Convener.objects.filter( vp_id = int(vp_id) )
         meeting = Meeting( vp_id = vp[0] , v_id = visitor )
         meeting.save()
 
+        #sending OTP here 
+        otpa.OTP(visitor.v_mobile,visitor.v_otp)
         params = { 'name' : name , 
                     'email': email ,
                     'mobile' : mobile , 

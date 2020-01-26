@@ -38,7 +38,7 @@ def sendmail(id,send_to ):
     msg.attach(MIMEText(body, 'plain')) 
     # open the file to be sent  
     filename = f"access_{id}.png"
-    attachment = open(f"./../../media/ids/{id}.png", "rb") 
+    attachment = open(f"media/ids/{id}.png", "rb") 
     # instance of MIMEBase and named as p 
     p = MIMEBase('application', 'octet-stream') 
     # To change the payload into encoded form 
