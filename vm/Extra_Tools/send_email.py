@@ -61,6 +61,3 @@ def sendmail(id,send_to ):
     s.sendmail(fromaddr, toaddr, text) 
     # terminating the session 
     s.quit() 
-
-
-sendmail(78,'kevinthoriya0074@gmail.com')

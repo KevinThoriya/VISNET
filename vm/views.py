@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Visitor, Convener, Meeting
 from .Extra_Tools import otp as otpa
 from .Extra_Tools import genrate_access as ga
+import .Extra_Tools import send_email as se
 
 
 def index(request):
@@ -64,6 +65,8 @@ def access(request):
                 'visitor' : visitor ,
                 'img' : str(visitor.v_id) + '.png'
             }
+            #send email to v_email address
+            se.sendmail(visitor.v_id,visitor.v_email)
             # genrate the access card for visitor veriable
             return render(request, 'access.html', params )
     return render(request, 'access.html', params)
