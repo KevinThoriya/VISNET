@@ -1,19 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Visitor, Convener, Meeting
-from .aTools import otp as otpa
-'''
-import random
+from .Extra_Tools import otp as otpa
+from .Extra_Tools import genrate_access as ga
 
-# Create your views here.
-def make_message():
-    length = 6
-    number = 0
-    for i in range(length):
-        number *=10
-        number += random.randrange( 1, 10, 1 )
-    return number
-'''
 
 def index(request):
     return render(request, 'index.html')
@@ -22,6 +12,7 @@ def scanface(request):
     return render(request, 'scan_face.html')
 
 def register(request):
+    #form value submisstion..
     return render(request, 'registration.html')
 
 def verify(request):
@@ -62,27 +53,20 @@ def verify(request):
     return render(request, 'verify.html')
 
 def access(request):
-    params={'visitor': [] }
+    params={'visitor': [], "img": 'access.png' }
     if request.method == 'POST':
         id = request.POST.get('id')
         visitor = Visitor.objects.filter(v_id = id )
         if len(visitor) > 0 :
             visitor = visitor[0]
+            ga.genrateId(visitor.v_id,visitor.v_name,visitor.v_perpose,visitor.v_address)
             params = {
-                'visitor' : visitor 
+                'visitor' : visitor ,
+                'img' : str(visitor.v_id) + '.png'
             }
             # genrate the access card for visitor veriable
             return render(request, 'access.html', params )
     return render(request, 'access.html', params)
-
-def qr(request):
-    return render(request, 'qr.html')
-
-def contact(request):
-    return render(request,'contact.html')
-
-def about(request):
-    return render(request,'about.html')
 
 def verifyotp(request):
     message = ''
@@ -98,6 +82,17 @@ def verifyotp(request):
     else :
         message = "server error ... contact to admin please.."
     return HttpResponse(message)
+
+def qr(request):
+    return render(request, 'qr.html')
+
+def contact(request):
+    return render(request,'contact.html')
+
+def about(request):
+    return render(request,'about.html')
+
+
 
 '''
 
