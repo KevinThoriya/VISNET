@@ -43,8 +43,8 @@ class Visitor(models.Model):
 
 class Meeting(models.Model):
     m_id = models.AutoField( primary_key = True )
-    v_id = models.ForeignKey(Visitor, on_delete=models.PROTECT)
-    vp_id = models.ForeignKey(Convener, on_delete=models.PROTECT)
+    v_id = models.ForeignKey(Visitor, on_delete=models.CASCADE)
+    vp_id = models.ForeignKey(Convener, on_delete=models.CASCADE)
     v_login_time = models.DateTimeField(blank=True, null=True)
     v_logout_time = models.DateTimeField(blank=True, null=True)
     v_meeting_done = models.BooleanField( default= False )

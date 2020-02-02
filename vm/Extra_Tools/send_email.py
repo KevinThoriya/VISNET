@@ -2,10 +2,10 @@
 # from your Gmail account  
 # libraries to be imported 
 
-#python -m install --upgrade pip
-#easy_install --upgrade setuptools
-#pip install email
-#easy_install email
+# python -m install --upgrade pip
+# easy_install --upgrade setuptools
+# pip install email
+# easy_install email
 
 
 import smtplib 
@@ -33,7 +33,15 @@ def sendmail(id,send_to ):
     # storing the subject  
     msg['Subject'] = "Access Card - VISNET"
     # string to store the body of the mail 
-    body = f"hi GentalMan this is a computer genrated email. It contain the access Card for your safe visit. your visiting id is {id}. it can easy your next visit here so keep it safe. use your access card for simless log in or log out have a nice day. "
+    body = f"""
+        Welcome to Parul University. This is your digitally generated access card. Your Permanent Visiting ID is {id}.
+		
+        This card will be helpful to enter this campus again.
+		
+        While exiting campus, scan the QRcode under the Scanner.
+		
+        Thank You. Have a nice day. Visit Again.
+    """
     # attach the body with the msg instance 
     msg.attach(MIMEText(body, 'plain')) 
     # open the file to be sent  
@@ -53,7 +61,6 @@ def sendmail(id,send_to ):
     # start TLS for security 
     s.starttls() 
     # Authentication 
-
     s.login(fromaddr, "ABCD@abcd123") 
     # Converts the Multipart msg into a string 
     text = msg.as_string() 

@@ -9,12 +9,23 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
     <title>QR-Scanner - ViSNET</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'back.css' %}">
     <link href="https://kodhus.com/kodhus-ui/kodhus-0.1.0.min.css" rel="stylesheet" type="text/css">
 
+    
     <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
     <style>
@@ -127,10 +138,15 @@
         </div>
     </nav>
 
+    <div id="detected" style="position:absolute;">  {% csrf_token %} </div>
     <div class="container">
         <div class="info">
             <span id="text"> Waiting for QR Code...</span>
+            <div style="text-align: center; margin-top: 10px; color:white; justify-content: center; width: 100%;">
+                <h3 id="responce">Hello Welcome ,</h3>
+            </div>
         </div>
+        
         <div id="scanani1" style="">
             <div id="scanani" style="">
                 <video id="video" width=700 height=550> </video>
@@ -142,10 +158,11 @@
     </div>
     <script type="text/javascript">
 
+
+
+        var formated_data ;
         let scanner = new Instascan.Scanner({ video: document.getElementById('video') });
-        scanner.addListener('scan', function (content) {
-            alert(content);
-        });
+
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
                 scanner.start(cameras[0]);
@@ -155,6 +172,44 @@
         }).catch(function (e) {
             console.error(e);
         });
+        
+
+        scanner.addListener('scan', function(content) {
+            formated_data = JSON.parse(content);           
+            formated_data['csrfmiddlewaretoken']= $('input[name=csrfmiddlewaretoken]').val()
+            $.ajax({
+                    type : 'POST',
+                    url : '/qrscan/',
+                    data : formated_data,
+                    encode: true,
+                }).done(function(data){
+
+                    document.getElementById('responce').innerHTML = data;
+                    setTimeout(function(){ 
+                        document.getElementById('responce').innerHTML = '';
+                    }, 4000);
+                    
+                });
+
+        });
+
+        $('#detected').change(
+            function(event){
+                console.log('get  the  message ...');
+                event.preventDefault();
+                $.ajax({
+                    type : 'POST',
+                    url : '/qrscan/',
+                    data : formated_data,
+                    encode: true,
+                }).done(function(data){
+                    console.log("replocated to the database..");
+                });
+            }
+                    
+        );
+            
+
     </script>
 
 
@@ -168,16 +223,22 @@
                 video.play();
             });
         }
+
+        function wait(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                    break;
+                }
+            }
+        }
     </script>
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+  
+        
+    
 </body>
 
 </html>

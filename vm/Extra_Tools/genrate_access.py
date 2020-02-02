@@ -34,7 +34,8 @@ def genrateId(vId,vName,vPerpose, vCollege):
     vTime = getCurrentTime()
     vCollege = str(vCollege)
     #bacode genrater
-    string = (vName + " " + vId + " " + vTime)
+    content = { 'id' : vId , 'name' : vName , 'perpose' : vPerpose , 'collage' : vCollege }
+    string = json.dumps(content)
     bar_img = qrcode.make(string)
     bar_img = bar_img.resize((330,330))
     #crop image
@@ -54,7 +55,7 @@ def genrateId(vId,vName,vPerpose, vCollege):
     #id
     name_fnt = ImageFont.truetype("arial.ttf", 40)
     draw.text((870,230), vId , font=name_fnt , fill = (0,0,0,1))
-    #perpose
+    #purpose
     name_fnt = ImageFont.truetype("arial.ttf", 30)
     draw.text((350,380), vPerpose , font=name_fnt , fill = (0,0,0,1))
     #time

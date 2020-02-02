@@ -80,7 +80,10 @@ padding: 3px;
 }
 
 .intrs{
-    color: darksalmon;
+    font-size: 18px;
+    color: rgb(255,193,7);
+    text-align: center;
+    font-style: normal;
 }
 
 #message_otp{
@@ -100,7 +103,7 @@ padding: 3px;
             <div class="col-md-4">
                 <label for="profile">Display Picture</label>
                 <div id="profile" class="form-group">
-                    <img id="profile_pic" src="/media/demo/dp.png" alt="profile_pic">
+                    <img id="profile_pic" src="/media/ids/display_pic/114.png" alt="profile_pic">
                 </div>
             </div>
             <div class=" mt-5 col-md-8">
@@ -133,7 +136,11 @@ padding: 3px;
                     <tr>
                         <th></th>
                         <td>
-                            <a href="/register"><button class="btn-sm btn btn-submit btn-edit">Edit Details</button></a>
+                            <form action="/register/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{v_id}}" />
+                                <input type="submit" class="btn-sm btn btn-submit btn-edit" name="submit" value="Edit Details" />
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -141,9 +148,7 @@ padding: 3px;
         </div>
     </div>
     <div class=" my-5 intrs">
-        <p>Plz verify your mobile number as per rule of our university. and 
-            we have your verifed number for futher information and passing the details about your visit.
-        </p>
+        <p>Please Verify your Contact Details, as per the Protocols of University.</p>
     </div>
     <div class="form-controls">
         <form id="otpverify" method="POST">
@@ -193,7 +198,7 @@ $('#otpverify').submit(function(event){
         }).done(function(data){
             document.getElementById('message_otp').innerHTML = data;
             // $('#message_otp').html = data; 
-            if(data == 'Thanks For Verify Number.'){
+            if(data == 'Thanks for Verification. please wait ... '){
                 $('#otpverify').attr('action','/access/');
                 event.returnValue = true;
                 verify = true;

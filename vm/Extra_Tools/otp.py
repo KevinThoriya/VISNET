@@ -33,7 +33,7 @@ def make_message():
 # 'your VisNet verification code is {number}. welcome to Parul University.'
 
 def OTP(phoneNO, number):
-    message = f'your VisNet verification code is {number}. welcome to Parul University.'
+    message = f'Your VISNET Verification Code is {number}. Welcome to Parul University.'
     response = sendOTP(phoneNO, message )
     print(response.text)
 

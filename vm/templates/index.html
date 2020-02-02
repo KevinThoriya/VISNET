@@ -34,6 +34,12 @@
         width: 90%;
         transition-duration: 1s;
         margin-left: 38px;
+        
+    }
+    #bottom-div{
+        position: absolute;
+        bottom: 25px;   
+        width: 100%;
     }
     #lg:hover{
         color: white;
@@ -44,13 +50,16 @@
     #lg:hover  #lga{
         margin-left: 100px;
     }
+    #main_container{
+        position: relative;
+    }
 {% endblock %}
 
 
 {% block body %}
 
 <div id="main_container" class="container">
-    <center style="padding-top: 20px;"><h2> 4 Easy Step   <i class="fas fa-shoe-prints"></i>    To get The <i class="fas fa-id-card"></i>  AccessCard</h2></center>
+    <center style="padding-top: 50px;"><h2> 4 Easy Step   <i class="fas fa-shoe-prints"></i>    To get The <i class="fas fa-id-card"></i>  AccessCard</h2></center>
     <hr>
     <div class="steps">
         <div class="step">
@@ -58,7 +67,7 @@
                 <i class="fas fa-angle-double-right"></i>
             </span>
             <span class="step-text">
-                Scan Your Face So that VISNET can identify You and Grab Your details From database.
+                Scan Your Face So that VISNET can identify You and Get Your details From database.
             </span>
         </div>
         <div class="step">
@@ -67,7 +76,7 @@
                 <i class="fas fa-angle-double-right"></i>
             </span>
             <span class="step-text">
-                Enter the apropiate field Like perpose of Your visit and Who you want to visit.
+                Enter the apropiate field Like purpose of Your visit and Who you want to visit.
             </span>
         </div>
         <div class="step">
@@ -88,7 +97,7 @@
             </span>
         </div>
     </div>
-    <div class="mt-5">
+    <div class="mt-5" id="bottom-div" >
         <a href="/scanface"><button id="lg" class="btn btn-lg btn-submit"> Let's Go <span id="lga">-></span></button></a>
     </div>   
 </div>
