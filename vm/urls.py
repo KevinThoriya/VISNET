@@ -14,6 +14,7 @@ urlpatterns = [
     path('contact/',views.contact,name="contact"),
     path('about/',views.about,name="about"),
     path('verifyotp/',views.verifyotp,name="verifyotp"),
+    path('edit/',views.edit,name="edit"),
     # path('verifyotp/',views.log,name="log"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT )

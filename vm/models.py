@@ -29,7 +29,8 @@ class Visitor(models.Model):
     v_time = models.DateTimeField(auto_now_add = True)
     v_otp = models.CharField(default="", max_length=10)
     v_mobile_verify = models.BooleanField( default=False )
-    # vp valu baki
+    v_image = models.ImageField(default='', upload_to="ids/display_pic")
+
     def __str__(self):
         return self.v_name
 

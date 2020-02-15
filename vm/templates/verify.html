@@ -103,7 +103,7 @@ padding: 3px;
             <div class="col-md-4">
                 <label for="profile">Display Picture</label>
                 <div id="profile" class="form-group">
-                    <img id="profile_pic" src="/media/ids/display_pic/114.png" alt="profile_pic">
+                    <img id="profile_pic" src="{{v_image}}" alt="profile_pic">
                 </div>
             </div>
             <div class=" mt-5 col-md-8">
@@ -136,7 +136,7 @@ padding: 3px;
                     <tr>
                         <th></th>
                         <td>
-                            <form action="/register/" method="post">
+                            <form action="/edit/" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="id" value="{{v_id}}" />
                                 <input type="submit" class="btn-sm btn btn-submit btn-edit" name="submit" value="Edit Details" />
