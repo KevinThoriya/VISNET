@@ -8,12 +8,12 @@ class Convener(models.Model):
     vp_mobile = models.CharField(max_length = 13 , default = "")
     vp_email = models.CharField(max_length = 100 , default = "")
     vp_profession = models.CharField(max_length = 500 , default="") #what is the couurent job status ..
-    vp_work = models.CharField(max_length = 500) #what is he doing ??
+    vp_department = models.CharField(max_length = 500) #what is he doing ??
     vp_start_time = models.TimeField()
     vp_end_time = models.TimeField()
 
     def __str__(self):
-        return self.vp_name
+        return f"{self.vp_name} {self.vp_profession} of {self.vp_department}" 
 
     def get_absolute_url(self):
         pass

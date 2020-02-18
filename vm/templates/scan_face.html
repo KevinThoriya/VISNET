@@ -102,13 +102,13 @@ input[type="text"]
 
 <div class="row">
     <div class="">
-        <form action="/register" style="width:1500px;">
+        <form action="/revisit/" method="POST" style="width:1500px;">{% csrf_token %}
             <div class="form-row align-items-center" style="position: absolute; right: 5px;"> 
                 <div class="col-sm-6">
                     <label for="FormInputName">Enter your last visiting ID</label>
                 </div>
                 <div class="col-sm-2 my-1"  style="align-items: flex-end;">
-                    <input type="text" style=""  class="form-control" id="inlineFormInputName" placeholder="-0-">
+                    <input type="text" name="id"  class="form-control" id="inlineFormInputName" placeholder="-0-">
                 </div>
                 <div class="col-sm-3 my-1">
                     <button type="submit" class="btn btn-submit btn-edit " style="margin-left: 0px">Next -> </button>
@@ -153,7 +153,6 @@ input[type="text"]
                 <div class="col-lg-4"> <div class="btn btn-submit btn-edit " id="resetbutton">Re Take</div></div>
                 <div class="col-lg-4"> 
                     <input type="submit" class="btn btn-submit btn-edit " id="nextbutton" value="Next" />
-                    
                 </div>
             </div>
         </form>

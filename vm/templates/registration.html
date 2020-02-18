@@ -28,7 +28,6 @@ overflow: hidden;
 border: 2px solid white;
 }
 #profile_pic{
-    margin-left: -50px;
     height: 200px;
 }
 label{
@@ -83,7 +82,7 @@ input[type="tel"]::placeholder{
                     <label for="profile">Display Picture</label>
                     <div id="profile" class="form-group">
                         <div style=""></div>
-                        <input type="hidden" value="{{v_image}}" name="image">
+                        <input type="hidden" id="hid_img" value="{{v_image}}" name="image">
                         <img  id="profile_pic" src="{{v_image}}" alt="profile_pic">
                     </div>
                 </div>
@@ -115,22 +114,20 @@ input[type="tel"]::placeholder{
                     <label for="pov" > Purpose of Visit </label>
                     <select id="pov" name="perpose" class="form-control">
                         <option value="v-" selected>-</option>
-                        <option value="A-">A</option>
-                        <option value="B-">B</option>
-                        <option value="meeting" >C</option>
-                        <option value="D-">D</option>
-                        <option value="E-">E</option>
+                        <option value="admission">Admission</option>
+                        <option value="meeting" >Meeting</option>
+                        <option value="events">Events</option>
+                        <option value="Seminars">Seminars</option>
+                        <option value="others">Others</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="pv"> Who you want to Visit </label>
                     <select id="pv" name="towhom" class="form-control">
                         <option value="v-" selected>-</option>
-                        <option value="A-" >A</option >
-                        <option value="B-">B</option>
-                        <option value="1" >C</option>
-                        <option value="D-">D</option>
-                        <option value="E-">E</option>
+                        {% for vperson in vp  %}
+                            <option value="{{vperson.vp_id}}"> {{vperson}} </option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -143,6 +140,7 @@ input[type="tel"]::placeholder{
 
 {% block js %}
     //<script>
+        // console.log('{{vp}}');
     if(('{{perpose}}' != '')){
         var options = document.getElementById("pov").options,
         name ='{{perpose}}';
@@ -154,5 +152,28 @@ input[type="tel"]::placeholder{
             }
         }
     }
-    
+
+    function toDataURL(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                callback(reader.result);
+            }
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
+    if(("{{v_image}}").length < 100){
+        toDataURL('{{v_image}}', function(dataUrl) {
+            $('#profile_pic').attr('src',dataUrl);
+            $('#hid_img').attr('value',dataUrl);
+        })
+    } else {
+        $('#profile_pic').css({
+            "margin-left": "-50px",
+        });
+    }
 {% endblock %}

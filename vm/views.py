@@ -16,6 +16,21 @@ def index(request):
 def scanface(request):
     return render(request, 'scan_face.html')
 
+def revisit(request):
+    if request.method == 'POST':
+        id = request.POST.get('id');
+        visitor = Visitor.objects.filter(v_id=id)[0]
+        params = { 'fname' : visitor.v_name.split()[0] , 
+                    'lname': visitor.v_name.split()[1] ,
+                    'email': visitor.v_email ,
+                    'mobile' : visitor.v_mobile , 
+                    'address': visitor.v_address,
+                    'perpose': visitor.v_perpose,
+                    'v_image' : '/media/ids/display_pic/'+str(visitor.v_id)+'.png'
+                    }
+    params["vp"] = Convener.objects.filter()
+    return render(request, 'registration.html',params)
+
 def edit(request):
     if request.method == 'POST':
         id = request.POST.get('id');
@@ -29,7 +44,8 @@ def edit(request):
                     'id_number' : visitor.v_id,
                     'v_image' : '/media/ids/display_pic/'+str(visitor.v_id)+'.png'
                     }
-        # print(visitor.v_name.split()[0])
+    params["vp"] = Convener.objects.filter()
+    # print(visitor.v_name.split()[0])
     return render(request, 'registration.html',params)
 
 def register(request):
@@ -44,10 +60,10 @@ def register(request):
                 'id_number' : '',
                 'v_image' : ''
                 }
+    params["vp"] = Convener.objects.filter()
     if request.method == 'POST':
-        if True:        
-            img = request.POST.get("img");
-            params['v_image'] = img;
+        img = request.POST.get("img");
+        params['v_image'] = img;
     return render(request, 'registration.html',params)
 
 def verify(request):
@@ -179,10 +195,14 @@ def save_image(img,id):
         im = Image.open(BytesIO(base64.b64decode(image[1])))
         # im.save('new_image.png', 'PNG')
         width, height = im.size 
-        im1 = im.crop((50, 0, 50 + height , height)) 
+        if im.size[0] != im.size[1]:
+            im = im.crop((50, 0, 50 + height , height)) 
         save_path =  'media/ids/display_pic/'+ str(id) +'.png'
-        im1.save(save_path)
-        return save_path
+        im.save(save_path)
+    else:
+        save_path = image[0]
+    return save_path
+
 
 
 
